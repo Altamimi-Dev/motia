@@ -30,6 +30,26 @@ export type EventHandler<TInput, TEmitData> = (input: TInput, ctx: FlowContext<T
 
 export type Emit = string | { topic: string; label?: string; conditional?: boolean }
 
+export type HandlerConfig = {
+  ram: number
+  cpu?: number
+  machineType: 'cpu' | 'memory' | 'gpu'
+  timeout: number
+}
+
+export type QueueConfig = {
+  type: 'fifo' | 'standard'
+  messageGroupId?: string | null
+  maxRetries: number
+  retryStrategy: 'none' | 'exponential' | 'jitter'
+  visibilityTimeout: number
+}
+
+export type InfrastructureConfig = {
+  handler?: Partial<HandlerConfig>
+  queue?: Partial<QueueConfig>
+}
+
 export type EventConfig = {
   type: 'event'
   name: string
@@ -45,6 +65,7 @@ export type EventConfig = {
    * Needs to be relative to the step file.
    */
   includeFiles?: string[]
+  infrastructure?: Partial<InfrastructureConfig>
 }
 
 export type NoopConfig = {
@@ -88,6 +109,7 @@ export interface ApiRouteConfig {
    * Needs to be relative to the step file.
    */
   includeFiles?: string[]
+  infrastructure?: Partial<InfrastructureConfig>
 }
 
 export interface ApiRequest<TBody = unknown> {
@@ -123,6 +145,7 @@ export type CronConfig = {
    * Needs to be relative to the step file.
    */
   includeFiles?: string[]
+  infrastructure?: Partial<InfrastructureConfig>
 }
 
 export type CronHandler<TEmitData = never> = (ctx: FlowContext<TEmitData>) => Promise<void>
