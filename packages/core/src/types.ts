@@ -109,7 +109,6 @@ export interface ApiRouteConfig {
    * Needs to be relative to the step file.
    */
   includeFiles?: string[]
-  infrastructure?: Partial<InfrastructureConfig>
 }
 
 export interface ApiRequest<TBody = unknown> {
@@ -145,7 +144,6 @@ export type CronConfig = {
    * Needs to be relative to the step file.
    */
   includeFiles?: string[]
-  infrastructure?: Partial<InfrastructureConfig>
 }
 
 export type CronHandler<TEmitData = never> = (ctx: FlowContext<TEmitData>) => Promise<void>
